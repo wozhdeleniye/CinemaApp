@@ -1,6 +1,8 @@
 package com.example.filmushits.log_reg_screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,11 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -25,25 +30,44 @@ import com.example.filmushits.R
 
 @Composable
 fun LogRegScreen(navController: NavHostController) {
+
     Column(
         modifier = Modifier
-            .background(color = Color(0xFF1D1D1D)),
+            .background(color = Color(0xFF1D1D1D))
+            .fillMaxSize()
+            .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
         verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(35.dp, Alignment.Top),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+
             Column(
+                verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                Text(text = "FИЛЬМУС",
+                    color = Color(0xFF1D1D1D))
+
+            }
+
+            Image(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .padding(0.dp),
+                painter = painterResource(id = R.drawable.logreg_logo),
+                contentDescription = "image description",
+                contentScale = ContentScale.None
+            )
+
+
+            Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
+                ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = "Погрузись в мир кино",
@@ -58,7 +82,6 @@ fun LogRegScreen(navController: NavHostController) {
                         textAlign = TextAlign.Center,
                     )
                 )
-
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = "Мы предлагаем удобный и легкий способ насладиться любимыми фильмами прямо с Вашего мобильного устройства.",
@@ -73,6 +96,8 @@ fun LogRegScreen(navController: NavHostController) {
                     )
                 )
             }
+
+
             Column(
                 verticalArrangement = Arrangement.spacedBy(15.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -81,12 +106,12 @@ fun LogRegScreen(navController: NavHostController) {
                     navController.navigate("RegScreen1")
                 },
                     modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        color = Color(0xFFFC315E),
-                        shape = RoundedCornerShape(size = 10.dp)
-                    )
-                    .padding(0.dp)
+                        .fillMaxWidth()
+                        .background(
+                            color = Color(0xFFFC315E),
+                            shape = RoundedCornerShape(size = 10.dp)
+                        )
+                        .padding(0.dp)
                 ) {
                     Text(
                         text = "Регистрация",
@@ -109,12 +134,12 @@ fun LogRegScreen(navController: NavHostController) {
                         navController.navigate("LogScreen")
                     },
                     modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp)
-                    .background(
-                        color = Color(0xFF292929),
-                        shape = RoundedCornerShape(size = 10.dp)
-                    )
+                        .fillMaxWidth()
+                        .padding(0.dp)
+                        .background(
+                            color = Color(0xFF292929),
+                            shape = RoundedCornerShape(size = 10.dp)
+                        )
 
 
                 ) {
@@ -134,5 +159,4 @@ fun LogRegScreen(navController: NavHostController) {
             }
         }
     }
-
 }

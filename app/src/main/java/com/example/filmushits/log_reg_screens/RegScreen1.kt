@@ -1,5 +1,6 @@
 package com.example.filmushits.log_reg_screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,11 +11,21 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,17 +35,52 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.filmushits.R
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavHostController
+import com.example.filmushits.custom_function.Calendar
+import com.example.filmushits.custom_function.CustomRadioGroup
 import com.example.filmushits.custom_function.RadioButtonWithoutCircle
+import com.maxkeppeker.sheets.core.models.base.UseCaseState
+import com.maxkeppeler.sheets.calendar.CalendarDialog
+import com.maxkeppeler.sheets.calendar.models.CalendarConfig
+import com.maxkeppeler.sheets.calendar.models.CalendarSelection
+import com.maxkeppeler.sheets.calendar.models.CalendarStyle
+import java.time.LocalDate
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegScreen1(navController: NavHostController) {
+
+    var name by rememberSaveable { mutableStateOf("") }
+    var login by rememberSaveable { mutableStateOf("") }
+    var mail by rememberSaveable { mutableStateOf("") }
+    var dateOfBirth by rememberSaveable { mutableStateOf("") }
+
+    var selectedOption by rememberSaveable { mutableStateOf<String?>("Мужчина") }
+    val options = listOf("Мужчина", "Женщина")
+
+    val calendarState = UseCaseState()
+
+    CalendarDialog(
+        state = calendarState,
+        config = CalendarConfig(
+            monthSelection = true,
+            yearSelection = true,
+            style = CalendarStyle.MONTH
+        ),
+        selection = CalendarSelection.Date {date ->
+            Log.d("SelectedDate", "$date")
+        }
+    )
+
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -137,9 +183,16 @@ fun RegScreen1(navController: NavHostController) {
                         )
 
                         OutlinedTextField(
-                            value = "", onValueChange = {},
-
-                            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp)
+                            value = name, onValueChange = { name = it },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp),
+                            textStyle = TextStyle(
+                                color = Color(0xFFFFFFFF)
+                            ),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                focusedBorderColor = Color(0xFF5E5E5E),
+                                unfocusedBorderColor = Color(0xFF5E5E5E),
+                            )
                         )
                     }
                     Row(
@@ -150,7 +203,11 @@ fun RegScreen1(navController: NavHostController) {
                                 color = Color(0x1F767680), shape = RoundedCornerShape(size = 8.dp)
                             )
                     ) {
-                        RadioButtonWithoutCircle()
+                        CustomRadioGroup(
+                            options = options,
+                            selectedOption = selectedOption,
+                            onOptionSelected = { option -> selectedOption = option }
+                        )
                     }
                     Column(
                         modifier = Modifier.fillMaxWidth(),
@@ -169,9 +226,16 @@ fun RegScreen1(navController: NavHostController) {
                         )
 
                         OutlinedTextField(
-                            value = "", onValueChange = {},
-
-                            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp)
+                            value = login, onValueChange = { login = it },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp),
+                            textStyle = TextStyle(
+                                color = Color(0xFFFFFFFF)
+                            ),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                focusedBorderColor = Color(0xFF5E5E5E),
+                                unfocusedBorderColor = Color(0xFF5E5E5E),
+                            )
                         )
                     }
                     Column(
@@ -191,9 +255,16 @@ fun RegScreen1(navController: NavHostController) {
                         )
 
                         OutlinedTextField(
-                            value = "", onValueChange = {},
-
-                            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp)
+                            value = mail, onValueChange = { mail = it },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp),
+                            textStyle = TextStyle(
+                                color = Color(0xFFFFFFFF)
+                            ),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                focusedBorderColor = Color(0xFF5E5E5E),
+                                unfocusedBorderColor = Color(0xFF5E5E5E),
+                            )
                         )
                     }
                     Column(
@@ -214,12 +285,21 @@ fun RegScreen1(navController: NavHostController) {
                         OutlinedTextField(
 
                             trailingIcon = {
-                                Icon(painter = painterResource(id = R.drawable.calendar), contentDescription = "")
+                                Icon(painter = painterResource(id = R.drawable.calendar), contentDescription = "",
+                                    modifier = Modifier.clickable {
+                                        calendarState.show()
+                                    })
                             },
-                            value = "",
-                            onValueChange = {},
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(10.dp)
+                            value = dateOfBirth, onValueChange = { dateOfBirth = it },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp),
+                            textStyle = TextStyle(
+                                color = Color(0xFFFFFFFF)
+                            ),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                focusedBorderColor = Color(0xFF5E5E5E),
+                                unfocusedBorderColor = Color(0xFF5E5E5E),
+                            )
                         )
                     }
 

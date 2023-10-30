@@ -12,10 +12,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,6 +44,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LogScreen(navController: NavHostController) {
 
@@ -156,7 +159,12 @@ fun LogScreen(navController: NavHostController) {
                             modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp),
                             textStyle = TextStyle(
                                 color = Color(0xFFFFFFFF)
+                            ),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                focusedBorderColor = Color(0xFF5E5E5E),
+                                unfocusedBorderColor = Color(0xFF5E5E5E),
                             )
+
                         )
                     }
 
@@ -193,6 +201,10 @@ fun LogScreen(navController: NavHostController) {
                             modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp),
                             textStyle = TextStyle(
                                 color = Color(0xFFFFFFFF)
+                            ),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                focusedBorderColor = Color(0xFF5E5E5E),
+                                unfocusedBorderColor = Color(0xFF5E5E5E),
                             )
                         )
                     }
