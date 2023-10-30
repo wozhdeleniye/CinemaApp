@@ -1,18 +1,25 @@
 package com.example.filmushits.log_reg_screens
 
+import android.text.style.ClickableSpan
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,30 +30,41 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColorInt
+import androidx.navigation.NavHostController
 import com.example.filmushits.R
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
-@Preview
-fun LogScreen() {
+fun LogScreen(navController: NavHostController) {
+
+    var username by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+    var passwordVisible by rememberSaveable { mutableStateOf(false) }
+
+
     Column(
         modifier = Modifier
-            .background(color = Color(0xFF1D1D1D)),
-        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+            .fillMaxHeight()
+            .background(color = Color(0xFF1D1D1D))
+            .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
+        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
+            modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -57,10 +75,15 @@ fun LogScreen() {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Image(
-                        modifier = Modifier.padding(1.dp),
-                        painter = painterResource(id = R.drawable.goback),
-                        contentDescription = "go back",
-                        contentScale = ContentScale.Fit
+
+                        modifier = Modifier
+                            .padding(1.dp)
+                            .clickable(onClick = {
+                                navController.navigate("LogRegScreen")
+                            }),
+                        painter = painterResource(id = R.drawable.go_back_vector),
+                        contentDescription = "image description",
+                        contentScale = ContentScale.None
                     )
                 }
                 Column(
@@ -91,8 +114,7 @@ fun LogScreen() {
             }
 
             Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(15.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -108,20 +130,17 @@ fun LogScreen() {
                     )
                 )
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(15.dp, Alignment.Top),
                     horizontalAlignment = Alignment.Start,
                 ) {
                     Column(
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
                         horizontalAlignment = Alignment.Start,
                     ) {
                         Text(
-                            text = "Логин",
-                            style = TextStyle(
+                            text = "Логин", style = TextStyle(
                                 fontSize = 15.sp,
                                 fontFamily = FontFamily(Font(R.font.inter)),
                                 fontWeight = FontWeight(500),
@@ -132,22 +151,22 @@ fun LogScreen() {
                         )
 
                         OutlinedTextField(
-                            value = "",
-                            onValueChange = {},
-
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            shape = RoundedCornerShape(10.dp)
+                            value = username, onValueChange = { username = it },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp),
+                            textStyle = TextStyle(
+                                color = Color(0xFFFFFFFF)
+                            )
                         )
                     }
 
                     Column(
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
                         horizontalAlignment = Alignment.Start,
                     ) {
                         Text(
+
                             text = "Пароль",
                             // 15 M Label
                             style = TextStyle(
@@ -161,12 +180,20 @@ fun LogScreen() {
                         )
 
                         OutlinedTextField(
-                            value = "",
-                            onValueChange = {},
-
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            shape = RoundedCornerShape(10.dp)
+                            trailingIcon = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.eye),
+                                contentDescription = "",
+                                modifier = Modifier.clickable { passwordVisible = !passwordVisible }
+                            ) },
+                            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            value = password, onValueChange = { password = it },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp),
+                            textStyle = TextStyle(
+                                color = Color(0xFFFFFFFF)
+                            )
                         )
                     }
 
@@ -176,13 +203,11 @@ fun LogScreen() {
             TextButton(modifier = Modifier
                 .fillMaxWidth()
                 .background(color = Color(0xFFFC315E), shape = RoundedCornerShape(size = 10.dp))
-                .padding(0.dp),
-                onClick = { }
-            ) {
+                .padding(0.dp), onClick = {
+                navController.navigate("LogRegScreen")
+            }) {
                 Text(
-                    modifier = Modifier
-                        .padding(0.dp),
-                    text = "Войти",
+                    modifier = Modifier.padding(0.dp), text = "Войти",
 
                     // 15 SB Label
                     style = TextStyle(
@@ -195,18 +220,35 @@ fun LogScreen() {
                 )
             }
         }
-        Text(
-            text = "Еще нет аккаунта? Зарегистрируйтесь",
-            // 14 M Label
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontFamily = FontFamily(Font(R.font.inter)),
-                fontWeight = FontWeight(500),
-                color = Color(0xFFC4C8CC),
 
-                textAlign = TextAlign.Center,
+        Row(
+            modifier = Modifier.fillMaxWidth(), Arrangement.Center
+        ) {
+            Text(
+                text = "Еще нет аккаунта? ",
+                // 14 M Label
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(Font(R.font.inter)),
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFFC4C8CC),
+
+                    textAlign = TextAlign.Center,
+                )
             )
-        )
-    }
+            Text(
+                modifier = Modifier.clickable { navController.navigate("RegScreen1") },
+                text = "Зарегистрируйтесь",
+                // 14 M Label
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(Font(R.font.inter)),
+                    fontWeight = FontWeight(500),
+                    color = Color("#FC315E".toColorInt()),
 
+                    textAlign = TextAlign.Center,
+                )
+            )
+        }
+    }
 }

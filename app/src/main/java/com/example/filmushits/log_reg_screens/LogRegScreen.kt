@@ -20,10 +20,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.filmushits.R
 
 @Composable
-fun LogRegScreen(onClick: () -> Unit) {
+fun LogRegScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .background(color = Color(0xFF1D1D1D)),
@@ -76,14 +77,16 @@ fun LogRegScreen(onClick: () -> Unit) {
                 verticalArrangement = Arrangement.spacedBy(15.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
             )   {
-                TextButton(modifier = Modifier
+                TextButton(onClick = {
+                    navController.navigate("RegScreen1")
+                },
+                    modifier = Modifier
                     .fillMaxWidth()
                     .background(
                         color = Color(0xFFFC315E),
                         shape = RoundedCornerShape(size = 10.dp)
                     )
-                    .padding(start = 15.dp, top = 12.dp, end = 15.dp, bottom = 12.dp),
-                    onClick = { }
+                    .padding(0.dp)
                 ) {
                     Text(
                         text = "Регистрация",
@@ -101,14 +104,19 @@ fun LogRegScreen(onClick: () -> Unit) {
                     )
                 }
 
-                TextButton(modifier = Modifier
+                TextButton(
+                    onClick = {
+                        navController.navigate("LogScreen")
+                    },
+                    modifier = Modifier
                     .fillMaxWidth()
+                    .padding(0.dp)
                     .background(
                         color = Color(0xFF292929),
                         shape = RoundedCornerShape(size = 10.dp)
                     )
-                    .padding(start = 15.dp, top = 12.dp, end = 15.dp, bottom = 12.dp),
-                    onClick = { }
+
+
                 ) {
                     Text(
                         text = "Войти",

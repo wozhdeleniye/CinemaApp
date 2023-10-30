@@ -2,12 +2,11 @@ package com.example.filmushits.log_reg_screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,11 +14,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,24 +28,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.filmushits.R
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.graphics.toColorInt
+import androidx.navigation.NavHostController
 import com.example.filmushits.custom_function.RadioButtonWithoutCircle
 
 
 @Composable
-@Preview
-fun RegScreen1() {
+fun RegScreen1(navController: NavHostController) {
     Column(
-        modifier = Modifier.background(color = Color(0xFF1D1D1D)),
-        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
+        modifier = Modifier
+            .fillMaxHeight()
+            .background(color = Color(0xFF1D1D1D))
+            .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
+        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -59,19 +54,26 @@ fun RegScreen1() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Row(modifier = Modifier.fillMaxWidth(0.1f),
+                Row(
+                    modifier = Modifier.fillMaxWidth(0.1f),
 
                     horizontalArrangement = Arrangement.spacedBy(0.dp, Alignment.Start),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Image(
-                        modifier = Modifier.padding(1.dp),
-                        painter = painterResource(id = R.drawable.goback),
-                        contentDescription = "go back",
-                        contentScale = ContentScale.Fit
+
+                        modifier = Modifier
+                            .padding(1.dp)
+                            .clickable(onClick = {
+                                navController.navigate("LogRegScreen")
+                            }),
+                        painter = painterResource(id = R.drawable.go_back_vector),
+                        contentDescription = "image description",
+                        contentScale = ContentScale.None
                     )
                 }
-                Column(modifier = Modifier.fillMaxWidth(0.34f),
+                Column(
+                    modifier = Modifier.fillMaxWidth(0.34f),
                     verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
@@ -88,10 +90,11 @@ fun RegScreen1() {
                             )
                     )
                 }
-                Row(modifier = Modifier.fillMaxWidth(0.1f),
+                Row(
+                    modifier = Modifier.fillMaxWidth(0.1f),
                     horizontalArrangement = Arrangement.spacedBy(0.dp, Alignment.End),
                     verticalAlignment = Alignment.CenterVertically,
-                ){
+                ) {
 
                 }
             }
@@ -211,7 +214,7 @@ fun RegScreen1() {
                         OutlinedTextField(
 
                             trailingIcon = {
-                                R.drawable.calendar_icon
+                                Icon(painter = painterResource(id = R.drawable.calendar), contentDescription = "")
                             },
                             value = "",
                             onValueChange = {},
@@ -225,7 +228,9 @@ fun RegScreen1() {
             TextButton(modifier = Modifier
                 .fillMaxWidth()
                 .background(color = Color(0xFFFC315E), shape = RoundedCornerShape(size = 10.dp))
-                .padding(0.dp), onClick = { }) {
+                .padding(0.dp), onClick = {
+                navController.navigate("RegScreen2")
+                }) {
                 Text(
                     modifier = Modifier.padding(0.dp), text = "Продолжить",
 
@@ -242,17 +247,34 @@ fun RegScreen1() {
             }
 
         }
-        Text(
-            text = "Еще нет аккаунта? Зарегистрируйтесь",
-            // 14 M Label
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontFamily = FontFamily(Font(R.font.inter)),
-                fontWeight = FontWeight(500),
-                color = Color(0xFFC4C8CC),
+        Row(modifier = Modifier.fillMaxWidth(),
+            Arrangement.Center
+        ){
+            Text(
+                text = "Уже есть аккаунт? ",
+                // 14 M Label
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(Font(R.font.inter)),
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFFC4C8CC),
 
-                textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Center,
+                )
             )
-        )
+            Text(
+                modifier = Modifier.clickable { navController.navigate("LogScreen") },
+                text = "Войдите",
+                // 14 M Label
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(Font(R.font.inter)),
+                    fontWeight = FontWeight(500),
+                    color = Color("#FC315E".toColorInt()),
+
+                    textAlign = TextAlign.Center,
+                )
+            )
+        }
     }
 }
