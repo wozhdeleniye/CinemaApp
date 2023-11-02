@@ -1,6 +1,5 @@
 package com.example.filmushits.log_reg_screens
 
-import android.text.style.ClickableSpan
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,13 +14,15 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,18 +32,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavHostController
 import com.example.filmushits.R
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -160,7 +158,7 @@ fun LogScreen(navController: NavHostController) {
                             textStyle = TextStyle(
                                 color = Color(0xFFFFFFFF)
                             ),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                            colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFF5E5E5E),
                                 unfocusedBorderColor = Color(0xFF5E5E5E),
                             )
@@ -189,11 +187,14 @@ fun LogScreen(navController: NavHostController) {
 
                         OutlinedTextField(
                             trailingIcon = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.eye),
-                                contentDescription = "",
-                                modifier = Modifier.clickable { passwordVisible = !passwordVisible }
-                            ) },
+                                Icon(
+                                    painter = painterResource(id = R.drawable.eye),
+                                    contentDescription = "",
+                                    modifier = Modifier.clickable {
+                                        passwordVisible = !passwordVisible
+                                    }
+                                )
+                            },
                             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                             value = password, onValueChange = { password = it },
@@ -202,7 +203,7 @@ fun LogScreen(navController: NavHostController) {
                             textStyle = TextStyle(
                                 color = Color(0xFFFFFFFF)
                             ),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                            colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFF5E5E5E),
                                 unfocusedBorderColor = Color(0xFF5E5E5E),
                             )
@@ -216,7 +217,7 @@ fun LogScreen(navController: NavHostController) {
                 .fillMaxWidth()
                 .background(color = Color(0xFFFC315E), shape = RoundedCornerShape(size = 10.dp))
                 .padding(0.dp), onClick = {
-                navController.navigate("LogRegScreen")
+                    navController.navigate("AppScreen")
             }) {
                 Text(
                     modifier = Modifier.padding(0.dp), text = "Войти",

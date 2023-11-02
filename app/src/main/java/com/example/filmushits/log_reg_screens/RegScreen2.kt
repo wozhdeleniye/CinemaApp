@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,6 +14,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
@@ -40,7 +40,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
 import com.example.filmushits.R
+import com.example.filmushits.app_screens.AppScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -156,8 +158,11 @@ fun RegScreen2(navController: NavHostController) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.eye),
                                     contentDescription = "",
-                                    modifier = Modifier.clickable { passwordVisible = !passwordVisible }
-                                ) },
+                                    modifier = Modifier.clickable {
+                                        passwordVisible = !passwordVisible
+                                    }
+                                )
+                            },
                             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                             value = password, onValueChange = { password = it },
@@ -166,7 +171,7 @@ fun RegScreen2(navController: NavHostController) {
                             textStyle = TextStyle(
                                 color = Color(0xFFFFFFFF)
                             ),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                            colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFF5E5E5E),
                                 unfocusedBorderColor = Color(0xFF5E5E5E),
                             )
@@ -193,8 +198,11 @@ fun RegScreen2(navController: NavHostController) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.eye),
                                     contentDescription = "",
-                                    modifier = Modifier.clickable { passwordrepeatVisible = !passwordrepeatVisible }
-                                ) },
+                                    modifier = Modifier.clickable {
+                                        passwordrepeatVisible = !passwordrepeatVisible
+                                    }
+                                )
+                            },
                             visualTransformation = if (passwordrepeatVisible) VisualTransformation.None else PasswordVisualTransformation(),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                             value = passwordrepeat, onValueChange = { passwordrepeat = it },
@@ -203,7 +211,7 @@ fun RegScreen2(navController: NavHostController) {
                             textStyle = TextStyle(
                                 color = Color(0xFFFFFFFF)
                             ),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                            colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFF5E5E5E),
                                 unfocusedBorderColor = Color(0xFF5E5E5E),
                             )
@@ -214,7 +222,10 @@ fun RegScreen2(navController: NavHostController) {
             TextButton(modifier = Modifier
                 .fillMaxWidth()
                 .background(color = Color(0xFFFC315E), shape = RoundedCornerShape(size = 10.dp))
-                .padding(0.dp), onClick = { }) {
+                .padding(0.dp),
+                onClick = {
+                    navController.navigate("AppScreen")
+            }) {
                 Text(
                     modifier = Modifier.padding(0.dp), text = "Зарегистрироваться",
 
@@ -224,10 +235,10 @@ fun RegScreen2(navController: NavHostController) {
                         fontFamily = FontFamily(Font(R.font.inter)),
                         fontWeight = FontWeight(600),
                         color = Color(0xFFFFFFFF),
-                        textAlign = TextAlign.Center,
+                        textAlign = TextAlign.Center
                     ),
 
-                )
+                    )
 
             }
 

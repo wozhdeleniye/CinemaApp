@@ -2,7 +2,6 @@ package com.example.filmushits.log_reg_screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +21,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -49,9 +47,11 @@ fun LogRegScreen(navController: NavHostController) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                Text(text = "FИЛЬМУС",
-                    color = Color(0xFF1D1D1D))
+            ) {
+                Text(
+                    text = "FИЛЬМУС",
+                    color = Color(0xFF1D1D1D)
+                )
 
             }
 
@@ -67,7 +67,7 @@ fun LogRegScreen(navController: NavHostController) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
+            ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = "Погрузись в мир кино",
@@ -101,10 +101,11 @@ fun LogRegScreen(navController: NavHostController) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(15.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
-            )   {
-                TextButton(onClick = {
-                    navController.navigate("RegScreen1")
-                },
+            ) {
+                TextButton(
+                    onClick = {
+                        navController.navigate("RegScreen1")
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(

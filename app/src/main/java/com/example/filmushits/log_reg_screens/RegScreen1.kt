@@ -1,6 +1,5 @@
 package com.example.filmushits.log_reg_screens
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,19 +10,15 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -35,24 +30,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.filmushits.R
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavHostController
-import com.example.filmushits.custom_function.Calendar
+import com.example.filmushits.R
 import com.example.filmushits.custom_function.CustomRadioGroup
-import com.example.filmushits.custom_function.RadioButtonWithoutCircle
-import com.maxkeppeker.sheets.core.models.base.UseCaseState
-import com.maxkeppeler.sheets.calendar.CalendarDialog
-import com.maxkeppeler.sheets.calendar.models.CalendarConfig
-import com.maxkeppeler.sheets.calendar.models.CalendarSelection
-import com.maxkeppeler.sheets.calendar.models.CalendarStyle
-import java.time.LocalDate
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,21 +50,6 @@ fun RegScreen1(navController: NavHostController) {
 
     var selectedOption by rememberSaveable { mutableStateOf<String?>("Мужчина") }
     val options = listOf("Мужчина", "Женщина")
-
-    val calendarState = UseCaseState()
-
-    CalendarDialog(
-        state = calendarState,
-        config = CalendarConfig(
-            monthSelection = true,
-            yearSelection = true,
-            style = CalendarStyle.MONTH
-        ),
-        selection = CalendarSelection.Date {date ->
-            Log.d("SelectedDate", "$date")
-        }
-    )
-
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -189,7 +158,7 @@ fun RegScreen1(navController: NavHostController) {
                             textStyle = TextStyle(
                                 color = Color(0xFFFFFFFF)
                             ),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                            colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFF5E5E5E),
                                 unfocusedBorderColor = Color(0xFF5E5E5E),
                             )
@@ -232,7 +201,7 @@ fun RegScreen1(navController: NavHostController) {
                             textStyle = TextStyle(
                                 color = Color(0xFFFFFFFF)
                             ),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                            colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFF5E5E5E),
                                 unfocusedBorderColor = Color(0xFF5E5E5E),
                             )
@@ -261,7 +230,7 @@ fun RegScreen1(navController: NavHostController) {
                             textStyle = TextStyle(
                                 color = Color(0xFFFFFFFF)
                             ),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                            colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFF5E5E5E),
                                 unfocusedBorderColor = Color(0xFF5E5E5E),
                             )
@@ -285,9 +254,10 @@ fun RegScreen1(navController: NavHostController) {
                         OutlinedTextField(
 
                             trailingIcon = {
-                                Icon(painter = painterResource(id = R.drawable.calendar), contentDescription = "",
+                                Icon(painter = painterResource(id = R.drawable.calendar),
+                                    contentDescription = "",
                                     modifier = Modifier.clickable {
-                                        calendarState.show()
+
                                     })
                             },
                             value = dateOfBirth, onValueChange = { dateOfBirth = it },
@@ -296,7 +266,7 @@ fun RegScreen1(navController: NavHostController) {
                             textStyle = TextStyle(
                                 color = Color(0xFFFFFFFF)
                             ),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                            colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFF5E5E5E),
                                 unfocusedBorderColor = Color(0xFF5E5E5E),
                             )
@@ -310,7 +280,7 @@ fun RegScreen1(navController: NavHostController) {
                 .background(color = Color(0xFFFC315E), shape = RoundedCornerShape(size = 10.dp))
                 .padding(0.dp), onClick = {
                 navController.navigate("RegScreen2")
-                }) {
+            }) {
                 Text(
                     modifier = Modifier.padding(0.dp), text = "Продолжить",
 
@@ -327,9 +297,10 @@ fun RegScreen1(navController: NavHostController) {
             }
 
         }
-        Row(modifier = Modifier.fillMaxWidth(),
+        Row(
+            modifier = Modifier.fillMaxWidth(),
             Arrangement.Center
-        ){
+        ) {
             Text(
                 text = "Уже есть аккаунт? ",
                 // 14 M Label
