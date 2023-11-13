@@ -1,4 +1,4 @@
-package com.example.filmushits.ui.theme
+package com.example.filmushits.view.theme
 
 import android.app.Activity
 import android.os.Build

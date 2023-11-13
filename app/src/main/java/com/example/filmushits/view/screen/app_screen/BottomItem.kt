@@ -1,4 +1,4 @@
-package com.example.filmushits.app_screens
+package com.example.filmushits.view.screen.app_screen
 
 import com.example.filmushits.R
 

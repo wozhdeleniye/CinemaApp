@@ -1,4 +1,4 @@
-package com.example.filmushits.custom_function
+package com.example.filmushits.view.custom_function
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

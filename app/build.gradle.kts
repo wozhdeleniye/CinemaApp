@@ -75,4 +75,13 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("com.maxkeppeler.sheets-compose-dialogs:calendar:1.2.0")
     implementation ("androidx.compose.material3:material3:1.1.2")
+    implementation ("com.google.accompanist:accompanist-pager:0.27.1")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.10")
+    implementation("com.squareup.retrofit2:converter-moshi:2.4.0")
+
+    implementation("androidx.navigation:navigation-compose:2.7.5")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
 }

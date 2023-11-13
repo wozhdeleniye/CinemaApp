@@ -1,4 +1,4 @@
-package com.example.filmushits.log_reg_screens
+package com.example.filmushits.view.screen.log_reg_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,22 +15,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.filmushits.R
+import com.example.filmushits.view.theme.BackGroundColor
+import com.example.filmushits.view.theme.TextButtonLabel
+import com.example.filmushits.view.theme.TextLabel
+import com.example.filmushits.view.theme.TextLogo
+import com.example.filmushits.view.theme.TextText
+import com.example.filmushits.view.theme.TextTitle2
 
 @Composable
 fun LogRegScreen(navController: NavHostController) {
 
     Column(
         modifier = Modifier
-            .background(color = Color(0xFF1D1D1D))
+            .background(color = BackGroundColor)
             .fillMaxSize()
             .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
         verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.Top),
@@ -48,18 +48,14 @@ fun LogRegScreen(navController: NavHostController) {
                 verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(
-                    text = "FИЛЬМУС",
-                    color = Color(0xFF1D1D1D)
-                )
-
+                TextLogo(text = stringResource(R.string.logo), BackGroundColor)
             }
 
             Image(
                 modifier = Modifier
                     .padding(0.dp),
                 painter = painterResource(id = R.drawable.logreg_logo),
-                contentDescription = "image description",
+                contentDescription = stringResource(id = R.string.image_description),
                 contentScale = ContentScale.None
             )
 
@@ -68,33 +64,10 @@ fun LogRegScreen(navController: NavHostController) {
                 verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = "Погрузись в мир кино",
 
-                    // 20 B Title 2
-                    style = TextStyle(
-                        fontSize = 20.sp,
-                        lineHeight = 24.sp,
-                        fontFamily = FontFamily(Font(R.font.inter)),
-                        fontWeight = FontWeight(700),
-                        color = Color(0xFFFFFFFF),
-                        textAlign = TextAlign.Center,
-                    )
-                )
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = "Мы предлагаем удобный и легкий способ насладиться любимыми фильмами прямо с Вашего мобильного устройства.",
+                TextTitle2(stringResource(id = R.string.logreg_label))
 
-                    // 15 R Text
-                    style = TextStyle(
-                        fontSize = 15.sp,
-                        fontFamily = FontFamily(Font(R.font.inter)),
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFFFFFFFF),
-                        textAlign = TextAlign.Center,
-                    )
-                )
+                TextText(stringResource(id = R.string.logreg_text))
             }
 
 
@@ -114,20 +87,7 @@ fun LogRegScreen(navController: NavHostController) {
                         )
                         .padding(0.dp)
                 ) {
-                    Text(
-                        text = "Регистрация",
-
-                        // 15 SB Label
-                        style = TextStyle(
-
-                            fontSize = 15.sp,
-                            fontFamily = FontFamily(Font(R.font.inter)),
-                            fontWeight = FontWeight(600),
-                            color = Color(0xFFFFFFFF),
-
-                            textAlign = TextAlign.Center,
-                        )
-                    )
+                    TextButtonLabel(text = stringResource(id = R.string.registration))
                 }
 
                 TextButton(
@@ -141,21 +101,8 @@ fun LogRegScreen(navController: NavHostController) {
                             color = Color(0xFF292929),
                             shape = RoundedCornerShape(size = 10.dp)
                         )
-
-
                 ) {
-                    Text(
-                        text = "Войти",
-
-                        // 15 SB Label
-                        style = TextStyle(
-                            fontSize = 15.sp,
-                            fontFamily = FontFamily(Font(R.font.inter)),
-                            fontWeight = FontWeight(600),
-                            color = Color(0xFFFC315E),
-                            textAlign = TextAlign.Center,
-                        )
-                    )
+                    TextLabel(stringResource(R.string.to_enter))
                 }
             }
         }
