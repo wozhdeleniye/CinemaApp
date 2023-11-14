@@ -12,7 +12,7 @@ class MyInterceptor : Interceptor {
         val request: Request = chain.request().newBuilder().apply {
             addHeader("accept", "application/json")
             addHeader("content-Type", "application/x-www-form-urlencoded")
-            addHeader("Authorization", "Bearer ${Network.token}")
+            addHeader("Authorization", "Bearer ${Network.getInstance().getTokenManager().getToken()}")
         }.build()
 
         var response: Response? = null

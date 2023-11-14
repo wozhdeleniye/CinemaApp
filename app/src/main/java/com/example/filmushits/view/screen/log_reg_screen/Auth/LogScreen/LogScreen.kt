@@ -1,4 +1,4 @@
-package com.example.filmushits.view.screen.log_reg_screen.RegScreen
+package com.example.filmushits.view.screen.log_reg_screen.Auth.LogScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -27,14 +29,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.filmushits.Etities.RequestBodies.LoginRequestBody
 import com.example.filmushits.R
-import com.example.filmushits.view.custom_function.CustomRadioGroup
+import com.example.filmushits.view.screen.log_reg_screen.Auth.AuthViewModel
 import com.example.filmushits.view.theme.BackGroundColor
 import com.example.filmushits.view.theme.BottomTextColor
 import com.example.filmushits.view.theme.ButtonColor
-import com.example.filmushits.view.theme.RadioButtonColor
 import com.example.filmushits.view.theme.TextBottomText
 import com.example.filmushits.view.theme.TextButtonLabel
 import com.example.filmushits.view.theme.TextColor
@@ -43,17 +49,17 @@ import com.example.filmushits.view.theme.TextLabel
 import com.example.filmushits.view.theme.TextLogo
 import com.example.filmushits.view.theme.TextTitle2
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegScreen1(navController: NavHostController) {
+fun LogScreen(navController: NavHostController) {
+    val loginViewModel: AuthViewModel = viewModel()
+    //var loginData by remember{ mutableStateOf<LoginRequestBody?>(null) }
 
-    var name by rememberSaveable { mutableStateOf("") }
-    var login by rememberSaveable { mutableStateOf("") }
-    var mail by rememberSaveable { mutableStateOf("") }
-    var dateOfBirth by rememberSaveable { mutableStateOf("") }
+    var username by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+    var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
-    var selectedOption by rememberSaveable { mutableStateOf<String?>("Мужчина") }
-    val options = listOf(stringResource(id = R.string.male), stringResource(id = R.string.female))
+
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -63,8 +69,7 @@ fun RegScreen1(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -96,7 +101,7 @@ fun RegScreen1(navController: NavHostController) {
                     verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    TextLogo(text = stringResource(id = R.string.logo), ButtonColor)
+                    TextLogo(text = stringResource(R.string.logo), ButtonColor)
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(0.1f),
@@ -112,7 +117,7 @@ fun RegScreen1(navController: NavHostController) {
                 verticalArrangement = Arrangement.spacedBy(15.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                TextTitle2(text = stringResource(id = R.string.registration))
+                TextTitle2(text = stringResource(R.string.sign_in))
 
                 Column(
                     modifier = Modifier.fillMaxWidth(),
@@ -124,33 +129,24 @@ fun RegScreen1(navController: NavHostController) {
                         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
                         horizontalAlignment = Alignment.Start,
                     ) {
-                        TextLabel(text = stringResource(id = R.string.name))
+                        TextLabel(text = stringResource(R.string.login))
 
                         OutlinedTextField(
-                            value = name, onValueChange = { name = it },
+                            value = username,
+                            onValueChange = {
+                                username = it
+                            },
                             singleLine = true,
-                            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp),
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(10.dp),
                             textStyle = TextStyle(
                                 color = TextColor
                             ),
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = TextFieldBorderColor,
-                                unfocusedBorderColor = TextFieldBorderColor,
+                                unfocusedBorderColor = TextFieldBorderColor
                             )
-                        )
-                    }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(0.dp)
-                            .background(
-                                color = RadioButtonColor, shape = RoundedCornerShape(size = 8.dp)
-                            )
-                    ) {
-                        CustomRadioGroup(
-                            options = options,
-                            selectedOption = selectedOption,
-                            onOptionSelected = { option -> selectedOption = option }
+
                         )
                     }
 
@@ -159,60 +155,25 @@ fun RegScreen1(navController: NavHostController) {
                         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
                         horizontalAlignment = Alignment.Start,
                     ) {
-                        TextLabel(text = stringResource(id = R.string.login))
+                        TextLabel(text = stringResource(R.string.password))
 
                         OutlinedTextField(
-                            value = login, onValueChange = { login = it },
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp),
-                            textStyle = TextStyle(
-                                color = TextColor
-                            ),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = TextFieldBorderColor,
-                                unfocusedBorderColor = TextFieldBorderColor,
-                            )
-                        )
-                    }
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
-                        horizontalAlignment = Alignment.Start,
-                    ) {
-                        TextLabel(text = stringResource(id = R.string.mail))
-
-                        OutlinedTextField(
-                            value = mail, onValueChange = { mail = it },
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp),
-                            textStyle = TextStyle(
-                                color = TextColor
-                            ),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = TextFieldBorderColor,
-                                unfocusedBorderColor = TextFieldBorderColor,
-                            )
-                        )
-                    }
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
-                        horizontalAlignment = Alignment.Start,
-                    ) {
-                        TextLabel(text = stringResource(id = R.string.date_of_birth))
-
-                        OutlinedTextField(
-
                             trailingIcon = {
-                                Icon(painter = painterResource(id = R.drawable.calendar),
-                                    contentDescription = stringResource(id = R.string.image_description),
+                                Icon(painter = painterResource(id = R.drawable.eye),
+                                    contentDescription = "",
                                     modifier = Modifier.clickable {
-
+                                        passwordVisible = !passwordVisible
                                     })
                             },
-                            value = dateOfBirth, onValueChange = { dateOfBirth = it },
+                            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            value = password,
+                            onValueChange = {
+                                password = it
+                            },
                             singleLine = true,
-                            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp),
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(10.dp),
                             textStyle = TextStyle(
                                 color = TextColor
                             ),
@@ -222,22 +183,30 @@ fun RegScreen1(navController: NavHostController) {
                             )
                         )
                     }
+
 
                 }
             }
             Box(
                 modifier = Modifier.alpha(
-                    if (fillCheckerReg1(name, login, mail)) 0.5f
-                    else 1f
+                    if (fillCheckerLog(username, password)) 1f
+                    else 0.5f
                 )
             ) {
                 TextButton(modifier = Modifier
                     .fillMaxWidth()
                     .background(color = ButtonColor, shape = RoundedCornerShape(size = 10.dp))
-                    .padding(0.dp), onClick = {
-                    if (fillCheckerReg1(name, login, mail)) navController.navigate("RegScreen2")
-                }) {
-                    TextButtonLabel(text = stringResource(id = R.string.to_continue))
+                    .padding(0.dp),
+                    onClick = {
+                        if (fillCheckerLog(username, password)) {
+                            val job = loginViewModel.login(LoginRequestBody(username, password))
+                            job.invokeOnCompletion {
+                                if (!job.isCancelled) navController.navigate("AppScreen")
+                            }
+                        }
+                    }
+                ){
+                    TextButtonLabel(text = stringResource(R.string.to_enter))
                 }
             }
         }
@@ -246,20 +215,17 @@ fun RegScreen1(navController: NavHostController) {
             modifier = Modifier.fillMaxWidth(), Arrangement.Center
         ) {
 
-            TextBottomText(text = stringResource(id = R.string.bottom_reg1) + " ", BottomTextColor)
+            TextBottomText(text = stringResource(id = R.string.bottom_log1) + " ", BottomTextColor)
 
-            Row(modifier = Modifier.clickable { navController.navigate("LogScreen") }) {
-                TextBottomText(text = stringResource(id = R.string.bottom_reg2), ButtonColor)
+            Row(modifier = Modifier.clickable { navController.navigate("RegScreen1") }) {
+                TextBottomText(text = stringResource(id = R.string.bottom_log2), ButtonColor)
             }
 
         }
     }
 }
-
-fun fillCheckerReg1(
-    name: String,
-    login: String,
-    mail: String
+fun fillCheckerLog(
+    username: String, password: String
 ): Boolean {
-    return (name != "") and (login != "") and (mail != "")
+    return (username != "") and (password != "")
 }

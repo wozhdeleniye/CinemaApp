@@ -36,73 +36,10 @@ import androidx.compose.ui.unit.sp
 import com.example.filmushits.R
 
 
-fun textColor(
-    selected:Boolean
-): Color{
-    if(selected) return Color(0xFF404040)
-    else return Color(0xFF909499)
-}
-
-@Composable
-fun CustomRadioButton(
-    text: String,
-    selected: Boolean,
-    onClick: () -> Unit
-) {
-    Row(Modifier.padding(2.dp)
-        .clickable(onClick = onClick)
-        .fillMaxWidth(if (text == "Мужчина") 0.5f
-        else 1f)
-        .background(
-            if (selected) Color(0xFFFFFFFF)
-            else Color.Transparent,
-            shape = RoundedCornerShape(size = 7.dp)
-        ),
-        horizontalArrangement = Arrangement.spacedBy(0.dp, Alignment.CenterHorizontally),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = text,
-            modifier = Modifier
-                .padding(start = 8.dp, top = 11.dp, end = 8.dp, bottom = 11.dp),
-
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontFamily = FontFamily(Font(R.font.inter)),
-                fontWeight = FontWeight(400),
-                color = textColor(selected),
-                textAlign = TextAlign.Center,
-            )
-        )
-    }
-}
 
 
 
-@Composable
-fun CustomRadioGroup(
-    options: List<String>,
-    selectedOption: String?,
-    onOptionSelected: (String) -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(2.dp)
-
-    ) {
-        options.forEach { option ->
-            CustomRadioButton(
-                text = option,
-                selected = option == selectedOption,
-                onClick = { onOptionSelected(option) }
-            )
-        }
-    }
-}
-
-
-@Composable
+/*@Composable
 fun RadioButtonWithoutCircle() {
     var selectedOption by remember { mutableStateOf<String?>("Мужчина") }
     val options = listOf("Мужчина", "Женщина")
@@ -112,10 +49,10 @@ fun RadioButtonWithoutCircle() {
         selectedOption = selectedOption,
         onOptionSelected = { option -> selectedOption = option }
     )
-}
+}*/
 
 
-@Composable
+/*@Composable
 fun MyScreen() {
     RadioButtonWithoutCircle()
-}
+}*/

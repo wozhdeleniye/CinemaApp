@@ -1,6 +1,6 @@
 package com.example.filmushits.Etities.RequestBodies
 
 data class LoginRequestBody (
-    val username: String,
-    val password: String
+    var username: String,
+    var password: String
 )

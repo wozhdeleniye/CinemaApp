@@ -5,8 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.filmushits.view.screen.app_screen.LikedScreen
-import com.example.filmushits.view.screen.app_screen.MainScreen
-import com.example.filmushits.view.screen.app_screen.ProfileScreen
+import com.example.filmushits.view.screen.app_screen.MainScreen.MainScreen
+import com.example.filmushits.view.screen.app_screen.ProfileScreen.ProfileScreen
 
 @Composable
 fun AppNavGraph(
