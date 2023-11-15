@@ -1,19 +1,20 @@
-package com.example.filmushits.view.screen.app_screen.MainScreen
+package com.example.filmushits.view.screen.app_screen.FilmScreen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.filmushits.Etities.Models.MovieDetailsModel
 import com.example.filmushits.Etities.Models.MoviesPagedListModel
 import com.example.filmushits.Network.Main.MovieRepository
 import com.example.filmushits.Network.Network
+import com.example.filmushits.UseCases.GetMovieProfileUseCase
 import com.example.filmushits.UseCases.MoviePageListUseCase
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 
-class MainViewModel: ViewModel() {
-    fun getMovies(page: Int): Deferred<MoviesPagedListModel?>{
+class FilmViewModel: ViewModel() {
+    fun getDetails(id: String): Deferred<MovieDetailsModel?> {
         return viewModelScope.async {
-            val result = MoviePageListUseCase(MovieRepository(Network.getInstance().getMovieApi())).invoke(page)
+            val result = GetMovieProfileUseCase(MovieRepository(Network.getInstance().getMovieApi())).invoke(id)
             result.getOrNull()
         }
     }

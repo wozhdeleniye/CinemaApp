@@ -163,7 +163,8 @@ fun LogScreen(navController: NavHostController) {
                                     contentDescription = "",
                                     modifier = Modifier.clickable {
                                         passwordVisible = !passwordVisible
-                                    })
+                                    }
+                                )
                             },
                             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),

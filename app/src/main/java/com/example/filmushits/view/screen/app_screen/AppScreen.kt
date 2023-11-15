@@ -6,22 +6,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.filmushits.navigation.AppNavGraph
+import com.example.filmushits.navigation.BottomBarNavGraph
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AppScreen() {
-    val navController = rememberNavController()
+    val navHostController = rememberNavController()
     Scaffold(
         bottomBar = {
-            BottomNavigation(navControler = navController)
+            BottomNavigation(navControler = navHostController)
         }
     ) {
         Box(modifier = Modifier.padding(it)){
-            AppNavGraph(navHostController = navController)
+            BottomBarNavGraph(navHostController)
         }
-
     }
 }

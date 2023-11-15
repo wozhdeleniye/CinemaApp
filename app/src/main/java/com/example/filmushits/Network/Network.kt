@@ -3,6 +3,7 @@ package com.example.filmushits.Network
 import androidx.lifecycle.ViewModel
 import com.example.filmushits.Etities.RequestBodies.RegisterRequestBody
 import com.example.filmushits.Network.Auth.AuthApi
+import com.example.filmushits.Network.Favorite.FavoriteApi
 import com.example.filmushits.Network.Main.MovieApi
 import com.example.filmushits.Network.Profile.ProfileApi
 import kotlinx.coroutines.Job
@@ -44,6 +45,7 @@ class Network {
     fun getAuthApi(): AuthApi.AuthApi = retrofit.create(AuthApi.AuthApi::class.java)
     fun getMovieApi(): MovieApi = retrofit.create(MovieApi::class.java)
     fun getProfileApi(): ProfileApi = retrofit.create(ProfileApi::class.java)
+    fun getFavoriteApi(): FavoriteApi = retrofit.create(FavoriteApi::class.java)
 
     companion object {
         private var instance: Network? = null

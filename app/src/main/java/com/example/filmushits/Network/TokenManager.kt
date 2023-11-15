@@ -1,8 +1,11 @@
 package com.example.filmushits.Network
 
+import android.R.attr.key
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+
 
 class TokenManager(context: Context) {
     private val masterKeyAlias = MasterKey.Builder(context, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
@@ -29,7 +32,7 @@ class TokenManager(context: Context) {
         return sharedPreferences.getString(TOKEN_KEY, "") ?: ""
     }
 
-    fun isAuthorized(): Boolean{
-        return false
+    fun deleteToken(){
+        sharedPreferences.edit().putString(TOKEN_KEY, "token_deleted").apply()
     }
 }

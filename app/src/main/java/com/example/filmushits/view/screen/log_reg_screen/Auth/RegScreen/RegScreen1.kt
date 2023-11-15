@@ -1,5 +1,6 @@
 package com.example.filmushits.view.screen.log_reg_screen.Auth.RegScreen
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -42,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.filmushits.Etities.RequestBodies.RegisterRequestBody
 import com.example.filmushits.R
 import com.example.filmushits.view.screen.log_reg_screen.Auth.AuthViewModel
 import com.example.filmushits.view.theme.BackGroundColor
@@ -72,6 +74,7 @@ fun RegScreen1(navController: NavHostController) {
 
     var password by rememberSaveable { mutableStateOf("") }
     var passwordrepeat by rememberSaveable { mutableStateOf("") }
+
 
 
     var regStep by remember { mutableStateOf(false)}
@@ -118,7 +121,7 @@ fun RegScreen1(navController: NavHostController) {
 
             Box(
                 modifier = Modifier.alpha(
-                    if ((fillCheckerReg1(name, login, mail) and !regStep) or (fillCheckerReg2(password, passwordrepeat) and regStep)) 1f
+                    if ((fillCheckerReg1(name, login, mail, dateOfBirth) and !regStep) or (fillCheckerReg2(password, passwordrepeat) and regStep)) 1f
                     else 0.5f
                 )
             ) {
@@ -126,14 +129,14 @@ fun RegScreen1(navController: NavHostController) {
                     .fillMaxWidth()
                     .background(color = ButtonColor, shape = RoundedCornerShape(size = 10.dp))
                     .padding(0.dp), onClick = {
-                    if (!regStep and fillCheckerReg1(name, login, mail)) regStep = true
-                    if (regStep and fillCheckerReg2(password, passwordrepeat)) {
-                        /*if (selectedOption == "Женщина") selectedOptionBody = 1
-                        val job = regViewModel.register(RegisterRequestBody(name, login, password, mail, dateOfBirth, selectedOptionBody))
-                        job.invokeOnCompletion {
-                            if (!job.isCancelled) navController.navigate("AppScreen")
-                        }*/
-                    }
+                        if (!regStep and fillCheckerReg1(name, login, mail, dateOfBirth)) regStep = true
+                        if (regStep and fillCheckerReg2(password, passwordrepeat)) {
+                            if (selectedOption == "Женщина") selectedOptionBody = 1
+                            val job = regViewModel.register(RegisterRequestBody(name, login, password, mail, revertFormatDate(dateOfBirth), selectedOptionBody))
+                            job.invokeOnCompletion {
+                                if (!job.isCancelled) navController.navigate("AppScreen")
+                            }
+                        }
                 }) {
                     if(!regStep) TextButtonLabel(text = stringResource( R.string.to_continue))
                     else TextButtonLabel(text = stringResource( R.string.to_register))
@@ -291,7 +294,10 @@ fun regFields1(
 
                         })
                 },
-                value = dateOfBirth, onValueChange = { dateOfBirth = it },
+                value = dateOfBirth, onValueChange = {
+                    dateOfBirth = it
+                    onValueChangeDOB(it)
+                    },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(10.dp),
                 textStyle = TextStyle(
@@ -517,13 +523,42 @@ fun CustomRadioGroup(
 fun fillCheckerReg1(
     name: String,
     login: String,
-    mail: String
+    mail: String,
+    dob: String
 ): Boolean {
-    return (name != "") and (login != "") and (mail != "")
+    return checkIfLoginValid(login) && checkIfNameValid(name) && checkIfBirthDateValid(dob) && checkIfEmailValid(mail)
 }
 
 fun fillCheckerReg2(
     password: String, rpassword: String
 ): Boolean {
-    return (password != "") and (rpassword != "") and (password == rpassword)
+    return checkIfPasswordValid(password) && checkIfPasswordValid(rpassword) && checkIfPasswordEqualsRepeatedPassword(password, rpassword)
 }
+
+fun checkIfLoginValid(text: String): Boolean {
+    return text.isNotEmpty()
+}
+
+fun checkIfNameValid(text: String): Boolean {
+    return text.isNotEmpty()
+}
+
+fun checkIfPasswordValid(text: String): Boolean {
+    return text.isNotEmpty()
+}
+
+fun checkIfBirthDateValid(text: String): Boolean {
+    return Regex("""((([1-2][0-9]|3[0-1]|0[1-9]).(0[13-9]|1[0-2])|(0[13-9]|1[0-2]).([1-2][0-9]|3[0-1]|0[1-9])).\d{4})""").matches(text)
+}
+
+fun checkIfEmailValid(text: String): Boolean {
+    return Regex("""^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+${'$'}""").matches(text)
+}
+fun revertFormatDate(date: String): String {
+    val (day, month, year) = date.split('.')
+    return "${year}-${month}-${day}T00:00:00"
+}
+fun checkIfPasswordEqualsRepeatedPassword(password: String, repeatedPassword: String): Boolean {
+    return password == repeatedPassword
+}
+

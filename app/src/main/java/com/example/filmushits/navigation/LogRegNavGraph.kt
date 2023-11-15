@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.filmushits.view.screen.app_screen.AppScreen
+import com.example.filmushits.view.screen.log_reg_screen.Auth.LogoScreen
 import com.example.filmushits.view.screen.log_reg_screen.LogRegScreen
 import com.example.filmushits.view.screen.log_reg_screen.Auth.LogScreen.LogScreen
 import com.example.filmushits.view.screen.log_reg_screen.Auth.RegScreen.RegScreen1
@@ -14,7 +15,7 @@ import com.example.filmushits.view.screen.log_reg_screen.Auth.RegScreen.RegScree
 fun Nav() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "LogRegScreen"){
+    NavHost(navController = navController, startDestination = "Preview"){
         composable(route = "LogRegScreen"){
             LogRegScreen(navController)
         }
@@ -23,6 +24,9 @@ fun Nav() {
         }
         composable(route = "RegScreen1"){
             RegScreen1(navController)
+        }
+        composable(route = "Preview"){
+            LogoScreen(navController)
         }
         composable(route = "AppScreen"){
             AppScreen()

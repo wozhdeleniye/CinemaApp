@@ -11,6 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.filmushits.R
+import com.example.filmushits.view.screen.log_reg_screen.Auth.RegScreen.textColor
 
 // Set of Material typography styles to start with
 val Typography = Typography(
@@ -86,6 +87,52 @@ fun TextButtonLabel(text: String){
         )
     )
 }
+@Composable
+fun TextButton1Label(text: String){
+    Text(
+        text = text,
+        // 15 SB Label
+        style = TextStyle(
+            fontSize = 15.sp,
+            fontFamily = FontFamily(Font(R.font.inter)),
+            fontWeight = FontWeight(600),
+            color = ButtonColor,
+
+            textAlign = TextAlign.Center,
+        )
+    )
+}
+
+@Composable
+fun TextFailure(text: String){
+    Text(
+        text = "Неверный логин или пароль.",
+        // 14 R Text
+        style = TextStyle(
+            fontSize = 14.sp,
+            fontFamily = FontFamily(Font(R.font.inter)),
+            fontWeight = FontWeight(400),
+            color = Color(0xFFE64646),
+
+            )
+    )
+}
+
+@Composable
+fun TextDescription(text: String){
+    Text(
+        text = text,
+        // 14 R Text
+        style = TextStyle(
+            fontSize = 14.sp,
+            fontFamily = FontFamily(Font(R.font.inter)),
+            fontWeight = FontWeight(400),
+            color = TextColor,
+            )
+    )
+}
+
+
 
 @Composable
 fun TextTitle1(text: String){
@@ -195,7 +242,7 @@ fun AboutItemString1(text: String){
 @Composable
 fun AboutItemString2(text: String){
     Text(
-        text = "США, Австралия",
+        text = text,
         // 14 R Text
         style = TextStyle(
             fontSize = 14.sp,
